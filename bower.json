@@ -1,0 +1,32 @@
+{
+  "name": "angular-bootstrap-table",
+  "homepage": "https://github.com/jj-chenjunjie/angular-bootstrap-table",
+  "authors": [
+    "Jason <943388837@qq.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "bootstrap",
+    "table",
+    "angualr"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "~3.3.6",
+    "bootstrap-table": "~1.10.1",
+    "angular": "~1.5.2",
+    "jquery": "~2.2.2"
+  }
+}

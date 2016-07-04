@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+	<head>
+		<meta charset="UTF-8">
+		<title>angular table</title>
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+		<link rel="stylesheet" type="text/css" href="bower_components/bootstrap-table/dist/bootstrap-table.min.css"/>
+	</head>
+	<body>
+		<h1>{{title}}</h1>
+		<!--<hr />
+		<h2>通过 data 属性的方式</h2>
+		<table data-toggle="table">
+		    <thead>
+		        <tr>
+		            <th>Item ID</th>
+		            <th>Item Name</th>
+		            <th>Item Price</th>
+		        </tr>
+		    </thead>
+		    <tbody>
+		        <tr>
+		            <td>1</td>
+		            <td>Item 1</td>
+		            <td>$1</td>
+		        </tr>
+		        <tr>
+		            <td>2</td>
+		            <td>Item 2</td>
+		            <td>$2</td>
+		        </tr>
+		    </tbody>
+		</table>
+		<hr />
+		<h2>通过 JavaScript 的方式</h2>
+		<table id="table"></table>
+		<hr />-->
+		<h2>通过 angular 的方式</h2>
+		{{hd}}
+		<lable>Item Name <input type="text" ng-model="table.params.itemName"/></lable> {{table.params.itemName}}
+		<div id="tool-bar">
+		</div>
+		<table bs-table="table"></table>
+		<hr />
+		<p>{{table.row | json}}</p>
+		
+	</body>
+	<script src="bower_components/jquery/dist/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/bootstrap/dist/js/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/bootstrap-table/dist/bootstrap-table.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/bootstrap-table/dist/locale/bootstrap-table-zh-CN.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="bower_components/angular/angular.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="angular-bootstrap-table.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+/*	jQuery.fn.bootstrapTable.defaults.search = true;
+	
+	jQuery.fn.bootstrapTable.columnDefaults = {
+			halign: 'center',
+			align: 'center'
+		}
+		$('#table').bootstrapTable({
+		    columns: [{
+		        field: 'id',
+		        title: 'Item ID'
+		    }, {
+		        field: 'name',
+		        title: 'Item Name'
+		    }, {
+		        field: 'price',
+		        title: 'Item Price'
+		    }],
+		    data: [{
+		        id: 1,
+		        name: 'Item 1',
+		        price: '$1'
+		    }, {
+		        id: 2,
+		        name: 'Item 2',
+		        price: '$2'
+		    }]
+		});
+
+		var data = [];
+		for(var i = 1; i <= 88; i++){
+			data.push({
+				id: i,
+				name: 'Item ' + i,
+				price: '$' + i
+			})
+		}
+		var hd = jQuery.fn.bootstrapTable.defaults;*/
+		
+		var app = angular.module('myApp', ['bsTable']);
+		app.run(function($rootScope){
+			$rootScope.title = 'Angular Bootstrap Table';
+			$rootScope.table = {
+				options: {
+					columns: [{
+						title: 'status',
+					}, {
+				        field: 'id',
+				        title: 'Item ID'
+				    }, {
+				        field: 'name',
+				        title: 'Item Name'
+				    }, {
+				        field: 'price',
+				        title: 'Item Price'
+				    }],
+				    url: 'data.json',
+				    pagination: true,
+				    sidePagination: 'server',
+				    search: true,
+				    queryParams: function(params) {
+				    	angular.extend(params, $rootScope.table.params);
+						return params;
+					},
+					responseHandler: function(res){
+						var data = [];
+						angular.forEach(res, function(item){
+							if(item.name.indexOf($rootScope.table.params.itemName) >= 0){
+								data.push(item);
+							}
+						});
+						return {
+							rows: data,
+							total: 88
+						};
+//						return data;
+					}
+				},
+				params: {itemName: ''}
+			}
+		});
+
+	</script>
+</html>
